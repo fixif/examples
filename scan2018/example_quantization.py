@@ -115,7 +115,7 @@ print("Frequency specifications: \n %s") % g
 H = g.to_dTF(ftype="butter", method="scipy")
 print ("\nTransfer function order is %d \n %s") % (H.order, H)
 
-#g.plot(H)
+g.plot(H)
 
 #testing a few realizations
 R_SS = State_Space(Filter(tf=H))
@@ -128,7 +128,7 @@ Realizations = [R_SS, R_SS_balanced, R_DFII,  R_LGS]
 
 
 plotRoundingErrorEffects(Realizations)
-print ("Yippi")
+print ("Yippi !")
 
 
 
