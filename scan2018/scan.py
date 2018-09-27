@@ -82,7 +82,7 @@ print(g)
 H = g.to_dTF(ftype='butter', method='scipy')
 print(H)
 #we can instantly compute the WCPG that corresponds to this "ideal" transfer function
-print ("Initial TF WCPG =  %s") % (H.WCPG())
+print ("Initial TF WCPG =  %s" % H.WCPG())
 
 
 structlist=list()
@@ -124,12 +124,12 @@ for R in Realizations:
             msb, lsb, error, additionalSteps = FXPF_ABCD(SS.A, SS.B, SS.C, SS.D, u_bound, wl)
             wordlengths.append(w)
             errors.append(error)
-            print("\n\nWCPG  %s") % (SS.WCPG())
-            print("\nFXPF for wl=%s are determined using %s additional steps.") % (wl, additionalSteps)
-            print ("Wordlengths: %s") % (wl)
-            print ("MSBs: %s") % (msb)
-            print("LSBs: %s") % (lsb)
-            print("Errors: %s") % (error)
+            print("\n\nWCPG  %s" % SS.WCPG())
+            print("\nFXPF for wl=%s are determined using %s additional steps." % (wl, additionalSteps))
+            print ("Wordlengths: %s" % (wl))
+            print ("MSBs: %s" % (msb))
+            print("LSBs: %s" % (lsb))
+            print("Errors: %s" % (error))
         except:
             break
 
