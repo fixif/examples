@@ -1,30 +1,16 @@
 # coding=utf-8
 
 from fixif.WCPG import WCPG_ABCD_res
+from fixif.LTI import dSS
 import numpy as np
 
 quant = np.vectorize(lambda x,q: round(x*q)/q)
 
 
-def iter_randomABCD(N, initSeed=0):
-	"""
-	generate N 'random' ABCD 3x3 with good properties
-	"""
-	seed = initSeed
-	for _ in range(N):
-		# find a good random ABCD
-		good = False
-		while not good:
-			A,B,C,D,good = randomABCD(seed)
-			seed += 1
-		# send it
-		yield A,B,C,D, seed
-
-
-def randomABCD(seed):
+def random_dSS(seed):
 	"""
 	generate a 'random' ABCD 3x3 with good properties
-	return A, B, C, D and a boolean (True if good properties)
+	return a dSS, its WCPG, the result dictionary and a boolean (True if good properties)
 	"""
 	# set seed
 	np.random.seed(seed)
@@ -42,10 +28,15 @@ def randomABCD(seed):
 	Bpp = quant(Bp,8)
 	Cpp = quant(Cp,8)
 
-	# try to compute the WCPG
-	try:
-		W, res = WCPG_ABCD_res(App, Bpp, Cpp, D)
-	except ValueError:
-		return App, Bpp, Cpp, D, False
+
+	l = np.linalg.eig(App)[0]
+	if all(np.vectorize(lambda x: abs(x)<(1-1e-8))(l)):
+		try:
+			W, res = WCPG_ABCD_res(App, Bpp, Cpp, D)
+		except ValueError:
+			return dSS(App, Bpp, Cpp, D), 0, {}, False
+		else:
+			return dSS(App, Bpp, Cpp, D), W, res, res['N']>5000
 	else:
-		return App, Bpp, Cpp, D, res['N']>5000
+		return dSS(App, Bpp, Cpp, D), 0, {}, False
+
