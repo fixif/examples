@@ -42,14 +42,10 @@ def randomABCD(seed):
 	Bpp = quant(Bp,8)
 	Cpp = quant(Cp,8)
 
-
-	l = np.linalg.eig(App)[0]
-	if all(np.vectorize(lambda x: abs(x)<(1-1e-8))(l)):
-		try:
-			W, res = WCPG_ABCD_res(App, Bpp, Cpp, D)
-		except ValueError:
-			return App, Bpp, Cpp, D, False
-		else:
-			return App, Bpp, Cpp, D, res['N']>5000
-	else:
+	# try to compute the WCPG
+	try:
+		W, res = WCPG_ABCD_res(App, Bpp, Cpp, D)
+	except ValueError:
 		return App, Bpp, Cpp, D, False
+	else:
+		return App, Bpp, Cpp, D, res['N']>5000
