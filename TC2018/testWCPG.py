@@ -7,8 +7,6 @@ find some with log2(WCPG) != log2(WCPG_naive)
 """
 
 
-from fixif.WCPG import WCPG_ABCD_res
-
 from genRandom import random_dSS
 from genEllip import randomElliptic
 import numpy as np

@@ -3,8 +3,7 @@
 import numpy as np
 from scipy.signal import ellip
 from fixif.LTI import dTF
-
-from fixif.WCPG import WCPG_ABCD_res
+from fixif.WCPG import WCPG_ABCD
 
 quant = np.vectorize(lambda x,q: round(x*q)/q)
 
@@ -47,8 +46,9 @@ def randomElliptic(seed, display=False):
 	# try to compute the WCPG
 	l = np.linalg.eig(S.A)[0]
 	if all(np.vectorize(lambda x: abs(x)<(1-1e-8))(l)):
+		res = {}
 		try:
-			W, res = WCPG_ABCD_res(S.A, S.B, S.C, S.D)
+			W = WCPG_ABCD(S.A, S.B, S.C, S.D, res)
 		except ValueError:
 			return S, 0, {}, False
 		else:

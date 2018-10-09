@@ -1,6 +1,7 @@
 # coding=utf-8
 
-from fixif.WCPG import WCPG_ABCD_res
+from fixif.WCPG import WCPG_ABCD
+from fixif.Structures import State_Space
 from fixif.LTI import dSS
 import numpy as np
 
@@ -31,8 +32,9 @@ def random_dSS(seed):
 
 	l = np.linalg.eig(App)[0]
 	if all(np.vectorize(lambda x: abs(x)<(1-1e-8))(l)):
+		res = {}
 		try:
-			W, res = WCPG_ABCD_res(App, Bpp, Cpp, D)
+			W = WCPG_ABCD(App, Bpp, Cpp, D, res)
 		except ValueError:
 			return dSS(App, Bpp, Cpp, D), 0, {}, False
 		else:
