@@ -33,7 +33,7 @@ def random_dSS(seed):
 	l = np.linalg.eig(App)[0]
 	if all(np.vectorize(lambda x: abs(x)<(1-1e-8))(l)):
 
-		S = State_Space(Filter(A=App, B=Bpp, C=Cpp, D=D))
+		S = State_Space(Filter(A=App, B=Bpp, C=Cpp, D=D, name='randomdSS-%d'%seed))
 		res = {}
 		try:
 			W = S.dSS.WCPG(res)

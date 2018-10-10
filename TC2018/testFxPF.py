@@ -9,8 +9,9 @@ find some with log2(WCPG) != log2(WCPG_naive)
 
 from genRandom import random_dSS
 from fixif.LTI import random_Elliptic
+from fixif.FXPF import FXPF_ABCD
 import numpy as np
-
+from numpy import matrix as mat
 
 
 
@@ -46,25 +47,34 @@ def iter_somedSS(func, N, initSeed=0):
 
 
 
-for f, t in [(random_dSS, 'random 3x3'), (random_Elliptic, 'elliptic')]:
-	print("type=", t)
-	for S, W, res, seed in iter_somedSS(f, 10, 12345):
-		# exact WCPG
-		#print("WCPG")
-		l = np.ceil(np.log2(W[0, 0]))
-		# dummy naive WCPG
-		#print("very naive WCPG")
-		W1 = naive_double_WCPG(S.dSS, 500)     # 500 iterations for the very naive implementation
-		l1 = np.ceil(np.log2(W1[0, 0]))
-		# double WCPG with good number of iterations
-		#print("naive WCPG")
-		W2 = naive_double_WCPG(S.dSS, res["N"])
-		l2 = np.ceil(np.log2(W2[0, 0]))
 
-		if len({l,l1,l2})>1:
-			print("seed=", seed)
-			print("S=",S)
-			print("W=", W, "  log2=", l)
-			print("W1=", W1, "  log2=", l1)
-			print("W2=", W2, "  log2=", l2)
+def testFxPF(S):
+	# display
+	print(S)
 
+	# naive MSB spec
+	#TODO:
+
+	# use FxPF
+	wl = mat([w, ] * S.n)
+	try:
+		FXPF_ABCD(S.dSS.A, S.dSS.B, S.dSS.C, S.dSS.D, u_bound, wl)
+	except:
+		pass
+
+
+
+
+u_bound = mat(10)
+w = 8
+
+
+# test on several random dSS
+# for f, t in [(random_dSS, 'random 3x3'), (random_Elliptic, 'elliptic')]:
+# 	print("type=", t)
+# 	for S, W, res, seed in iter_somedSS(f, 10, 12345):
+# 		testFxPF(S)
+
+# give an error
+#  ERROR: Could not compute MSB: log2(1 - 2^(1-w)) is NaN
+testFxPF(random_dSS(13289)[0])
