@@ -8,7 +8,7 @@ find some with log2(WCPG) != log2(WCPG_naive)
 
 
 from genRandom import random_dSS
-from fixif.LTI import random_Elliptic
+from fixif.LTI import iter_random_Elliptic
 from fixif.FXPF import FXPF_ABCD
 import numpy as np
 from numpy import matrix as mat
@@ -70,10 +70,12 @@ w = 8
 
 
 # test on several random dSS
-for f, t in [(random_dSS, 'random 3x3'), (random_Elliptic, 'elliptic')]:
-	print("type=", t)
-	for S, W, res, seed in iter_somedSS(f, 10, 12345):
-		testFxPF(S)
+#for S, W, res, seed in iter_somedSS(random_dSS, 10, 12345):
+	#testFxPF(S)
+# test on elliptic
+for S in iter_random_Elliptic(10, seeded=True):
+	print("<---------------------------------------->")
+	testFxPF(S)
 
 # give an error
 #  ERROR: Could not compute MSB: log2(1 - 2^(1-w)) is NaN
