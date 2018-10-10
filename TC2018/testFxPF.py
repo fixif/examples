@@ -70,10 +70,10 @@ w = 8
 
 
 # test on several random dSS
-# for f, t in [(random_dSS, 'random 3x3'), (random_Elliptic, 'elliptic')]:
-# 	print("type=", t)
-# 	for S, W, res, seed in iter_somedSS(f, 10, 12345):
-# 		testFxPF(S)
+for f, t in [(random_dSS, 'random 3x3'), (random_Elliptic, 'elliptic')]:
+	print("type=", t)
+	for S, W, res, seed in iter_somedSS(f, 10, 12345):
+		testFxPF(S)
 
 # give an error
 #  ERROR: Could not compute MSB: log2(1 - 2^(1-w)) is NaN
