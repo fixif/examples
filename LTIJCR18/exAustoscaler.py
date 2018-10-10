@@ -26,4 +26,4 @@ r = Realization(None, (J, K, L, M, N, P, Q, R, S), surnameVarT=['t1', 'y1', 't2'
 
 u = [1,2,5,3,5,12,8,]
 
-print(r.runCdouble())
+print(r.runCdouble(u))
