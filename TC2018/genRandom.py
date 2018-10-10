@@ -1,11 +1,12 @@
 # coding=utf-8
 
-from fixif.WCPG import WCPG_ABCD
+
 from fixif.Structures import State_Space
-from fixif.LTI import dSS
+from fixif.LTI import Filter
+
 import numpy as np
 
-quant = np.vectorize(lambda x,q: round(x*q)/q)
+quant = np.vectorize(lambda x, q: round(x*q)/q)
 
 
 def random_dSS(seed):
@@ -20,25 +21,26 @@ def random_dSS(seed):
 	B = np.matrix('1; 0; 0')
 	C = np.matrix('1 0 0')
 	D = np.matrix(0)
-	T = np.random.rand(3,3)
+	T = np.random.rand(3, 3)
 	Ap = np.linalg.inv(T)@A@T
 	Bp = np.linalg.inv(T)@B
 	Cp = C@T
-	# simplified them
-	App = quant(Ap,8)
-	Bpp = quant(Bp,8)
-	Cpp = quant(Cp,8)
-
+	# simplified the coefficients
+	App = quant(Ap, 8)
+	Bpp = quant(Bp, 8)
+	Cpp = quant(Cp, 8)
 
 	l = np.linalg.eig(App)[0]
 	if all(np.vectorize(lambda x: abs(x)<(1-1e-8))(l)):
+
+		S = State_Space(Filter(A=App, B=Bpp, C=Cpp, D=D))
 		res = {}
 		try:
-			W = WCPG_ABCD(App, Bpp, Cpp, D, res)
+			W = S.dSS.WCPG(res)
 		except ValueError:
-			return dSS(App, Bpp, Cpp, D), 0, {}, False
+			return S, 0, {}, False
 		else:
-			return dSS(App, Bpp, Cpp, D), W, res, res['N']>5000
+			return S, W, res, res['N']>5000
 	else:
-		return dSS(App, Bpp, Cpp, D), 0, {}, False
+		return None, 0, {}, False
 

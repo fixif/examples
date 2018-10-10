@@ -8,23 +8,23 @@ find some with log2(WCPG) != log2(WCPG_naive)
 
 
 from genRandom import random_dSS
-from genEllip import randomElliptic
+from fixif.LTI import random_Elliptic
 import numpy as np
 
 
 
 
 
-def naive_double_WCPG(A, B, C, D, nit):
-	""""""
+def naive_double_WCPG(S, nit):
+	"""naive floating-point WCPG evaluation of the dSS S with only `nit iterations"""
 
-	acc = np.zeros(D.shape)
-	acc += np.absolute(D)
-	powerA = np.matrix(np.eye(A.shape[1]))
+	acc = np.zeros(S.D.shape)
+	acc += np.absolute(S.D)
+	powerA = np.matrix(np.eye(S.A.shape[1]))
 
 	for i in range(0, nit):
-		acc += np.absolute(C * powerA * B)
-		powerA *= A
+		acc += np.absolute(S.C * powerA * S.B)
+		powerA *= S.A
 	return acc
 
 
