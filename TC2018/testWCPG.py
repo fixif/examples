@@ -44,7 +44,7 @@ def iter_somedSS(func, N, initSeed=0):
 		yield S, W, res, seed
 
 
-for f, t in [(random_dSS, 'random 3x3'), (randomElliptic, 'elliptic')]:
+for f, t in [(random_dSS, 'random 3x3'), (random_Elliptic, 'elliptic')]:
 	print("type=", t)
 	for S, W, res, seed in iter_somedSS(f, 10, 12345):
 		# exact WCPG
@@ -52,11 +52,11 @@ for f, t in [(random_dSS, 'random 3x3'), (randomElliptic, 'elliptic')]:
 		l = np.ceil(np.log2(W[0, 0]))
 		# dummy naive WCPG
 		#print("very naive WCPG")
-		W1 = naive_double_WCPG(S.A, S.B, S.C, S.D, 500)     # 500 iterations for the very naive implementation
+		W1 = naive_double_WCPG(S.dSS, 500)     # 500 iterations for the very naive implementation
 		l1 = np.ceil(np.log2(W1[0, 0]))
 		# double WCPG with good number of iterations
 		#print("naive WCPG")
-		W2 = naive_double_WCPG(S.A, S.B, S.C, S.D, res["N"])
+		W2 = naive_double_WCPG(S.dSS, res["N"])
 		l2 = np.ceil(np.log2(W2[0, 0]))
 
 		if len({l,l1,l2})>1:
