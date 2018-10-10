@@ -19,7 +19,7 @@ S = [[0]]
 
 
 r = Realization(None, (J, K, L, M, N, P, Q, R, S), surnameVarT=['t1', 'y1', 't2'], surnameVarX=['d1[0]', 'd1[1]', 'd2[0]', 'd2[1]'])
-#print(r.algorithmTxt(coefFormat=None, withSurname=True, withTime=False))
+print(r.algorithmTxt(coefFormat=None, withSurname=True, withTime=False))
 
 #H = r.to_dTF()
 #print(H)
