@@ -8,20 +8,26 @@ from loadmat import loadmat
 from numpy import matrix as mat
 
 
-def testFxPF(S):
+def testFxPF(S, u_bound):
 	# display
+	print("\n"*5)
 	print("<"+"-"*50+">")
-	print(S)
+	print(S.name)
 
-	# naive MSB spec
-	#TODO:
+	# WCPG of Hzeta
+	res = {}
+	msb = S.computeNaiveMSB(u_bound, res)
+	print("1st stage:")
+	print("msb=%s, N=%d" % (str(msb), res["N"]))
 
 	# use FxPF
 	wl = mat([w, ] * S.n)
 	try:
-		FXPF_ABCD(S.dSS.A, S.dSS.B, S.dSS.C, S.dSS.D, u_bound, wl)
+		print("FXPF:")
+		msb, lsb, error, steps = FXPF_ABCD(S.dSS.A, S.dSS.B, S.dSS.C, S.dSS.D, u_bound, wl)
+		print("msb=%s, lsb=%s, error=%f, steps=%d" % (str(msb), str(lsb), error, steps))
 	except:
-		pass
+		print("Error in FXPF !!")
 
 
 
@@ -59,13 +65,13 @@ S3 = State_Space(Filter(A=A, B=B.transpose(), C=C, D=D, name='Software-Defined R
 
 
 # random Elliptic filter
-F4 = random_Elliptic(seed=12345, quant=16)
+F4 = random_Elliptic(n=(2,3), seed=12345, quant=32)
 print(F4.details())
 S4 = State_Space(F4)
 
-
-for S in (S1, S2, S3, S4):
-	testFxPF(S)
+#for S in (S1, S2, S3, S4):
+for S in (S1, S2, S4):
+	testFxPF(S, u_bound)
 
 
 
