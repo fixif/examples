@@ -1,0 +1,54 @@
+#---
+#--- Exemple fichier .dat pour modele arthi.mod
+#---
+#--- Auteur: Hacene Ouzia, Sorbonne Universite (01-2019)
+#--- 
+
+data; 
+
+#---
+#--- DIMENSIONS 
+param p := 3;
+param np := 8;
+
+#---
+#--- PARAMETRES
+
+#-- Valeur max var w
+param u := 
+1 64
+2 64
+3 64
+4 64
+5 64
+6 64
+7 64
+8 64;
+
+#-- Coefficients des contraintes (E) ....
+param E : 1 2 3 4 5 6 7 8 := 
+1 6383.702312 1507.720712 16985.548051 24302.034455 8802.846935 2048.000000 0.000000 0.000000
+2 1036.682402 732.815602 2410.538954 3393.280971 1857.472497 0.000000 256.000000 0.000000
+3 1902.535041 307.520043 4042.619875 5986.948827 2114.331773 0.000000 0.000000 512.000000;
+
+
+#-- Second membre des contraintes (eps)...
+param eps := 
+1 0.015625
+2 0.015625
+3 0.015625;
+
+#-- wtilde
+param wtilde := 
+1 4
+2 4
+3 3
+4 3
+5 4
+6 3
+7 3
+8 3;
+
+
+
+ 
