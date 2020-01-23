@@ -87,8 +87,8 @@ lS.append(S5)
 ub = 10
 eps = 2**-6
 
-#for S in (S1, S2, S3, S4):
-for S in (S2,):
+for S in (S1, S2, S5, S4):
+#for S in (S2,):
 
 	ubar = ub * ones((S.q, 1))
 	eps_final = eps * ones((S.p, 1))
